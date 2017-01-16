@@ -2,7 +2,7 @@
 
 ## Why?
 
-Running 'webpack-dev-server' couldn't handle a {{{content}}}. ALso, i couldn't name things {{folder/filename}} and have it work eigther. This makes the two uniform. 
+Running 'webpack-dev-server' couldn't handle a {{{content}}}. ALso, i couldn't name things {{folder/filename}} and have it work either. This makes the two uniform. 
 
 > Server-side template rendering using [Handlebars](http://handlebarsjs.com/).
 
