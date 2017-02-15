@@ -2,26 +2,24 @@
 
 ## Why?
 
-Running 'webpack-dev-server' couldn't handle a {{{content}}}. Also, i couldn't name things a simple name like {{filename}} and have it work either. This simplifies the process.
+When running "webpack-dev-server" I couldn't use handlebars like so: {{{content}}} or {{filename}}. This simplifies the process. Originally implemented to support "webpack2 + vision + hapi." I also found even without Vision this was helpful for "webpack2 + hapi" so this has been added to NPM. 
 
-> Server-side template rendering using [Handlebars](http://handlebarsjs.com/).
-
-`use this repo`
-`npm install handlebars-webpack-plugin-simple --save-dev`
+To install use NPM: `npm install handlebars-webpack-plugin-simple --save-dev`
 
 ## Whats Different?
 
 This will make it so you don't have to use something like {{ folder/file }}. If you are using Hapi + handlebars this may not work of you also use Vision. Just keep partial file names unique and list each partial directory. I ran into this using Vision. So you'll list the partial directories once for Vision configuration and again for webpack in `webpack.config.js'.
 
-Currently support for  {{> header title="page title"}} is non working.
+Currently support for context like: {{> header title="page title"}} is non working.
 
 ## Usage
 
-For vision include:
+With Vision include:
+
 `partialsPath: [__dirname + '/src/partials', __dirname + '/src/partials/example'], // and so on`
 
 
-In your webpack config register and setup the handlebars plugin
+With webpack2 include "webpack.config.js":
 
 ```javascript
 var path = require("path");
@@ -82,7 +80,6 @@ NOW
 ```hbs
 <body>
     {{> partialName}}
-
    
 
     {{> partialNamet}}
