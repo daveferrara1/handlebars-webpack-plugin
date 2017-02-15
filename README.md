@@ -1,20 +1,19 @@
-# Webpack plugin for Hapi + Vision + Handlebars
+# Webpack plugin for Hapi + Handlebars
 
 ## Why?
 
-Running 'webpack-dev-server' couldn't handle a {{{content}}}. ALso, i couldn't name things {{folder/filename}} and have it work either. This makes the two uniform. 
+Running 'webpack-dev-server' couldn't handle a {{{content}}}. Also, i couldn't name things a simple name like {{filename}} and have it work either. This simplifies the process.
 
 > Server-side template rendering using [Handlebars](http://handlebarsjs.com/).
 
 `use this repo`
-OR 
-`npm install handlebars-webpack-plugin --save-dev`
-And
-`patch partials.js`
+`npm install handlebars-webpack-plugin-simple --save-dev`
 
 ## Whats Different?
 
-This will make it so you don't have to use somthing like {{folder/file}}. This if you are using Hapi + Vision + handlebars. Just keep partial file names unique and list each partial directory. Once for Vision and Once for the plugin:
+This will make it so you don't have to use something like {{ folder/file }}. If you are using Hapi + handlebars this may not work of you also use Vision. Just keep partial file names unique and list each partial directory. I ran into this using Vision. So you'll list the partial directories once for Vision configuration and again for webpack in `webpack.config.js'.
+
+Currently support for  {{> header title="page title"}} is non working.
 
 ## Usage
 
@@ -84,8 +83,10 @@ NOW
 <body>
     {{> partialName}}
 
-    {{> header title="page title"}}
+   
 
     {{> partialNamet}}
+
+    Currently not supporting this implementation:  {{> header title="page title"}}
 </body>
 ```
