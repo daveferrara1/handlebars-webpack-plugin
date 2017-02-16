@@ -10,7 +10,7 @@ To install use NPM: `npm install handlebars-webpack-plugin-simple --save-dev`
 
 This will make it so you don't have to use something like {{ folder/file }}. If you are using Hapi + handlebars this may not work of you also use Vision. Just keep partial file names unique and list each partial directory. I ran into this using Vision. So you'll list the partial directories once for Vision configuration and again for webpack in `webpack.config.js'.
 
-Currently support for context like: {{> header title="page title"}} is non working.
+Currently support for context like: {{> header title="page title"}} is non-working.
 
 ## Usage
 
@@ -79,11 +79,10 @@ BEFORE
 NOW
 ```hbs
 <body>
-    {{> partialName}}
-   
+    {{> partialName}}   
 
     {{> partialNamet}}
 
-    Currently not supporting this implementation:  {{> header title="page title"}}
+    Currently not correctly supporting this implementation:  {{> header title="page title"}}
 </body>
 ```
