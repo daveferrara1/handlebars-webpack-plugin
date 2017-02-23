@@ -44,5 +44,6 @@ module.exports = {
 
 	getId: getPartialId,
 	loadMap: loadPartialsMap,
-	addMap: addPartialsMap
+	addMap: addPartialsMap,
+	getPartialId: getPartialId
 };
