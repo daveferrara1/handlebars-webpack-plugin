@@ -1,3 +1,10 @@
+# Version 1.1.0. -- This is for webpack 2.
+
+Now can output a hash partial {{> hash}} of value [hash], and will output multiple files option instead of just SPA single file. Examples coming soon.
+
+See this WIP Boilerplate for webpack 2 config.  https://github.com/Devmonic/Hapi
+
+
 # Webpack plugin for Hapi + Handlebars
 
 ## Why?

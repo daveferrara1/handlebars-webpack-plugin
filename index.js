@@ -68,6 +68,11 @@ HandlebarsPlugin.prototype.apply = function (compiler) {
   var self = this;
   var options = this.options;
   var data = this.data;
+  var entryFileSPA = options.entry;
+  var outputFileSPA = options.output;
+  // Options entries.
+  var entries = options.entries;
+
 
   compiler.plugin("emit", function (compilation, done) {
 
@@ -75,8 +80,6 @@ HandlebarsPlugin.prototype.apply = function (compiler) {
     var template;
     var result;
     var partials;
-    // Options entries.
-    var entries = options.entries;
 
     // Fetch paths to partials.
     partials = partialUtils.loadMap(Handlebars, options.partials);
@@ -142,6 +145,30 @@ HandlebarsPlugin.prototype.apply = function (compiler) {
           }
         }
       }
+    }
+    else {
+      templateContent = self.readFile(entryFileSPA, "utf-8");
+
+          if (options.onBeforeCompile) {
+            templateContent = options.onBeforeCompile(Handlebars, templateContent) || templateContent;
+          }
+          template = Handlebars.compile(templateContent);
+
+          if (options.onBeforeRender) {
+            data = options.onBeforeRender(Handlebars, data) || data;
+          }
+          result = template(data);
+
+          if (options.onBeforeSave) {
+            result = options.onBeforeSave(Handlebars, result) || result;
+          }
+          fs.outputFileSync(outputFileSPA, result, "utf-8");
+          // Log where we created file.
+          console.log(chalk.green(outputFileSPA + " created"));
+
+          if (options.onDone) {
+            options.onDone(Handlebars);
+          }
     }
     // Add dependencies to watch. This might not be the correct place
     // for that - but it works.
