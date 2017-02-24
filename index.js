@@ -91,7 +91,8 @@ HandlebarsPlugin.prototype.apply = function (compiler) {
 
     // Possibly add [hash] partial.
     if (options.hash) {
-      partials[partialUtils.getPartialId(options.hash)] = options.hash;
+      var hashKey = partialUtils.getPartialId(options.hash);
+      partials[hashKey] = options.hash;
       fs.outputFileSync(options.hash, compilation.hash, "utf-8");
       // Log where we created file.
       console.log(chalk.green(options.hash + " created"));
@@ -99,6 +100,8 @@ HandlebarsPlugin.prototype.apply = function (compiler) {
 
     // Register all partials.
     partialUtils.addMap(Handlebars, partials);
+     // Remove hash before add to watch to prevent HMR loop.
+    var hashRemove = (options.hash) ? delete partials[hashKey] : false;
     // Watch all partials for changes.
     self.addDependency.apply(self, Object.keys(partials).map(function (key) {
       return partials[key];

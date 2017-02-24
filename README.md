@@ -1,4 +1,4 @@
-# Version 1.1.0.
+# Version 1.2.0.
 
 Now can output a hash partial {{> hash}} of value [hash], and will output multiple files option instead of just SPA single file. Examples coming soon.
 
