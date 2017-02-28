@@ -1,5 +1,3 @@
-# Version 1.2.2.
-
 [![NPM](https://nodei.co/npm/handlebars-webpack-plugin-simple.png?downloads=true)](https://npmjs.org/package/handlebars-webpack-plugin-simple)
 
 Updates Include:
