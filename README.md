@@ -2,9 +2,9 @@
 
 Updates Include:
 
-Output a hash partial {{> hash}} of value [hash].
-Multiple files option instead of just SPA single file.
-Simplified naming to aide with Hapi Vision Templates. 
+* Output a hash partial {{> hash}} of value [hash].
+* Multiple files option instead of just SPA single file.
+* Simplified naming to aide with Hapi Vision Templates. 
 
 
 See this WIP Boilerplate for webpack 2 config.  https://github.com/Devmonic/Hapi
@@ -24,17 +24,14 @@ I now prefer this even without Vision so my fork has been added to NPM.
 
 This will make it so you don't have to use something like {{ folder/file }}. If you are using Hapi + Handlebars this example may not work with Vision Templates. So instead use use this plugin and just keep partial file names unique and list each partial directory. Now you get {{ file }}. I ran into this naming convention issue using Vision. You will still list the partial directories once for Vision configuration,  and again for webpack in `webpack.config.js'. See the examples below.
 
-Should note, currently support for context like: {{> header title="page title"}} is not tested. Use data: instead.
+Should note, currently support for context like: {{> header title="page title"}} is not tested. Use "data:" with JSON instead.
 
+<br /><br /><br />
 
-## Vision Usage
+### General Usage
+--------
 
-Vision include:
-
-`partialsPath: [__dirname + '/src/partials', __dirname + '/src/partials/example'], // and so on`
-
-
-webpack.config.js include":
+webpack.config.js include:
 
 ```javascript
 var path = require("path");
@@ -100,7 +97,23 @@ var webpackConfig = {
 };
 ```
 
-Use handlebars like, i.e.
+##### Additions specific to Vision Templates
+
+Vision include:
+```
+...
+partialsPath: [__dirname + '/src/partials', __dirname + '/src/partials/example'],
+...
+```
+
+
+
+<br /><br />
+###Handlebars Examples:
+----------
+
+
+####Partials & Helpers
 
 BEFORE
 ```hbs
@@ -119,16 +132,18 @@ NOW
     {{> partialName}}
 
     // helper
-    {{ HelperFileName}}
+    {{HelperFileName}}
 </body>
 ```
 
-###Passing JSON data to templates:
+<br /><br />
 
-This will make the each .json file available to all templates.
+####Passing JSON data to templates:
+
 
 JSON FILE:
-```{
+```
+{
   "title": "Json File Title",
   "meta": "Json File Meta ",
   "app": {
@@ -139,26 +154,37 @@ JSON FILE:
     "title": "app2 title",
     "meta": "app2 meta"
   }
-}```
+}
+```
 
-webpack.config.js:
+WEBPACK (webpack.config.js):
 
-```new HandlebarsPlugin({
+```
+new HandlebarsPlugin({
   ...
   data: require(path.join(process.cwd(), "src", "views", "helpers", "data.json")),
   ...
-}),```
+}),
+```
 
-Template File (someFile.hbs):
+TEMPLATE FILE (someFile.hbs):
 
-```{{title}}
-{{app.title}}```
+```
+{{title}}
+{{app.title}}
+```
 
-###Using JSON data with a helper:
+<br />
 
-```const data = require("./path/to/data.json");
+####Using JSON data with a helper:
+
+HELPER FILE:
+
+```
+const data = require("./path/to/data.json");
 
 in helper:
 
 data.title
-data.app.title```
+data.app.title
+```
