@@ -1,6 +1,6 @@
 # Version 1.2.0.
 
-Now can output a hash partial {{> hash}} of value [hash], and will output multiple files option instead of just SPA single file. Examples coming soon.
+Now can output a hash partial {{> hash}} of value [hash], and will output multiple files option instead of just SPA single file.
 
 See this WIP Boilerplate for webpack 2 config.  https://github.com/Devmonic/Hapi
 
@@ -37,24 +37,46 @@ var webpackConfig = {
     plugins: [
 
         new HandlebarsPlugin({
-            // path to main hbs template
-            entry: path.join(process.cwd(), "app", "src", "index.hbs"),
-            // filepath to result
-            output: path.join(process.cwd(), "build", "index.html"),
-            // data passed to main hbs template: `main-template(data)`
-            data: require("./app/data/project.json"),
+            // HASH example.
+            // Useful if you have names with [hash].
+            // Path to output a partial file containing [hash].
+            // Use {{> hash}} or /app-{{> hash}}.js.
+            hash: path.join(process.cwd(), "src", "views", "partials", "hash.hbs"),
 
-            // Matching your vision partials
-            // Use globbed path to partials, where folder/filename is unique
+            // MPA example
+            // Create Handlebars Entry Points & compiled Output files.
+            entries: {
+              app: {
+                  entry: path.join(__dirname, "src/views/templates/app.hbs"),
+                  output: path.join(__dirname, "public/build/index.html"),
+                },
+              app2: {
+                  entry: path.join(__dirname, "src/views/templates/app2.hbs"),
+                  output: path.join(__dirname, "public/build/app2.html"),
+              },
+            },
+
+            // SPA example
+            // Just Use One exports entry:{} point.
+            // entry: path.join(__dirname, "src/views/templates/index.hbs"),
+            // output: path.join(__dirname, "public/index.html"),
+
+            // This data: implementation will pass file data to all templates.
+            // Use data passed to hbs templates: "{{ val }}" or "{{ val.more }}"
+            data: require(path.join(process.cwd(), "src", "views", "helpers", "data.json")),
+
+            // Add globbed path to partials, where folder/filename is unique
             partials: [
-                path.join(process.cwd(), "src", "partials", "*.hbs"),
-                path.join(process.cwd(), "src", "partials", "example", "*.hbs"),
+              path.join(process.cwd(), "src", "views", "partials", "*.hbs"),
+              path.join(process.cwd(), "src", "views", "partials", "example", "*.hbs"),
             ],
 
-            // register custom helpers. May be either a function or a glob-pattern
+            // Add custom helpers. May be either a function or a glob-pattern,
+            // where folder/filename is unique if file.
+            // Can add a function directly.
             helpers: {
-                nameOfHbsHelper: Function.prototype,
-                projectHelpers: path.join(process.cwd(), "app", "helpers", "*.helper.js")
+              // nameOfHbsHelper: Function.prototype,
+              projectHelpers: path.join(process.cwd(), "src", "views", "helpers", "*.js")
             },
 
             // hooks
@@ -64,7 +86,7 @@ var webpackConfig = {
             onBeforeRender: function (Handlebars, data) {},
             onBeforeSave: function (Handlebars, resultHtml) {},
             onDone: function (Handlebars) {}
-        })
+          })
     ]
 };
 ```
@@ -92,4 +114,52 @@ NOW
 
     Currently not correctly supporting this implementation:  {{> header title="page title"}}
 </body>
+```
+
+###Passing JSON data to templates:
+
+This will make the each .json file available to all templates.
+
+JSON FILE:
+`{
+  "title": "Json File Title",
+  "meta": "Json File Meta ",
+  "app": {
+    "title": "app title",
+    "meta": "app meta"
+  }
+  "app2": {
+    "title": "app2 title",
+    "meta": "app2 meta"
+  }
+}`
+
+webpack.config.js:
+```
+new HandlebarsPlugin({
+  ...
+  data: require(path.join(process.cwd(), "src", "views", "helpers", "data.json")),
+  ...
+}),
+```
+
+Template File (someFile.hbs):
+```
+{{title}}
+{{app.title}}
+
+```
+
+
+
+
+###Passing JSON data to a helper:
+
+```
+const data = require("./public/build/manifest.json");
+
+in helper:
+
+data.title
+data.app.title
 ```
