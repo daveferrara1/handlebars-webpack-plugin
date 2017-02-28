@@ -34,7 +34,7 @@ function addPartialsMap(Handlebars, partialMap) {
 	Object.keys(partialMap).forEach(function (partialId) {
         var str = partialId;
 		var shortPartialId = str.substring(str.lastIndexOf("/") + 1, str.length);
-		log(chalk.gray("registering partial " + partialId));
+		log(chalk.gray("Partial: {{> " + shortPartialId + "}}"));
 		Handlebars.registerPartial(shortPartialId, fs.readFileSync(partialMap[partialId], "utf8"));
 	});
 }

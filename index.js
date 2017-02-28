@@ -3,10 +3,10 @@
 
 var fs = require("fs-extra");
 var chalk = require("chalk");
-var partialUtils = require("./utils/partials");
 var Handlebars = require("handlebars");
 var glob = require("glob");
-
+var partialUtils = require("./utils/partials");
+var log = require("./utils/log");
 
 // Export Handlebars for easy access in helpers.
 HandlebarsPlugin.Handlebars = Handlebars;
@@ -19,7 +19,7 @@ function getHelperId(filepath) {
 
 
 function addHelper(Handlebars, id, fun) {
-  console.log(chalk.grey("HandlebarsPlugin: registering helper " + id));
+  log(chalk.gray("Helper: {{" + id + "}}"));
   Handlebars.registerHelper(id, fun);
 }
 
@@ -94,8 +94,6 @@ HandlebarsPlugin.prototype.apply = function (compiler) {
       var hashKey = partialUtils.getPartialId(options.hash);
       partials[hashKey] = options.hash;
       fs.outputFileSync(options.hash, compilation.hash, "utf-8");
-      // Log where we created file.
-      console.log(chalk.green(options.hash + " created"));
     }
 
     // Register all partials.
@@ -106,6 +104,12 @@ HandlebarsPlugin.prototype.apply = function (compiler) {
     self.addDependency.apply(self, Object.keys(partials).map(function (key) {
       return partials[key];
     }));
+
+
+    // Log where we created [hash] file.
+    if (options.hash) {
+      console.log(chalk.green(options.hash + " created"));
+    }
 
     // Create each output file.
     if (entries) {
