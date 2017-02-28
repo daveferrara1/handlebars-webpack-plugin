@@ -142,28 +142,23 @@ JSON FILE:
 }```
 
 webpack.config.js:
-```
-new HandlebarsPlugin({
+
+```new HandlebarsPlugin({
   ...
   data: require(path.join(process.cwd(), "src", "views", "helpers", "data.json")),
   ...
-}),
-```
+}),```
 
 Template File (someFile.hbs):
-```
-{{title}}
-{{app.title}}
 
-```
+```{{title}}
+{{app.title}}```
 
 ###Using JSON data with a helper:
 
-```
-const data = require("./path/to/data.json");
+```const data = require("./path/to/data.json");
 
 in helper:
 
 data.title
-data.app.title
-```
+data.app.title```
