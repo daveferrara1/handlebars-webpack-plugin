@@ -1,32 +1,40 @@
-# Version 1.2.1.
+# Version 1.2.2.
 
-Now can output a hash partial {{> hash}} of value [hash], and will output multiple files option instead of just SPA single file.
+Updates Include:
+
+Output a hash partial {{> hash}} of value [hash].
+Multiple files option instead of just SPA single file.
+Simplified naming to aide with Hapi Vision Templates. 
+
 
 See this WIP Boilerplate for webpack 2 config.  https://github.com/Devmonic/Hapi
+
+To install use NPM: `npm install handlebars-webpack-plugin-simple --save-dev`
 
 
 # Webpack plugin for Hapi + Handlebars
 
 ## Why?
 
-When running "webpack-dev-server" I couldn't use handlebars like so: {{{content}}} or {{filename}}. This simplifies the process. Originally implemented to support "webpack2 + vision + hapi." I also found even without Vision this was helpful for "webpack2 + hapi" so this has been added to NPM. 
+When running "webpack-dev-server" I couldn't use handlebars simply like so: {{{content}}} or {{filename}}. This simplifies the process. Originally implemented to support "webpack2 + Handlebars + Vision + Hapi." 
+I now prefer this even without Vision so my fork has been added to NPM. 
 
-To install use NPM: `npm install handlebars-webpack-plugin-simple --save-dev`
 
 ## Whats Different?
 
-This will make it so you don't have to use something like {{ folder/file }}. If you are using Hapi + handlebars this may not work of you also use Vision. Just keep partial file names unique and list each partial directory. I ran into this using Vision. So you'll list the partial directories once for Vision configuration and again for webpack in `webpack.config.js'.
+This will make it so you don't have to use something like {{ folder/file }}. If you are using Hapi + Handlebars this example may not work with Vision Templates. So instead use use this plugin and just keep partial file names unique and list each partial directory. Now you get {{ file }}. I ran into this naming convention issue using Vision. You will still list the partial directories once for Vision configuration,  and again for webpack in `webpack.config.js'. See the examples below.
 
-Currently support for context like: {{> header title="page title"}} is non-working.
+Should note, currently support for context like: {{> header title="page title"}} is not tested. Use data: instead.
 
-## Usage
 
-With Vision include:
+## Vision Usage
+
+Vision include:
 
 `partialsPath: [__dirname + '/src/partials', __dirname + '/src/partials/example'], // and so on`
 
 
-With webpack2 include "webpack.config.js":
+webpack.config.js include":
 
 ```javascript
 var path = require("path");
@@ -39,6 +47,7 @@ var webpackConfig = {
         new HandlebarsPlugin({
             // HASH example.
             // Useful if you have names with [hash].
+            // Works great with CommonChunksPlugin.
             // Path to output a partial file containing [hash].
             // Use {{> hash}} or /app-{{> hash}}.js.
             hash: path.join(process.cwd(), "src", "views", "partials", "hash.hbs"),
@@ -91,9 +100,7 @@ var webpackConfig = {
 };
 ```
 
-Partial ids are registered by `parentFolder/filename` (without file extensions)
-
-Use handlebars in your main and partials like, i.e.
+Use handlebars like, i.e.
 
 BEFORE
 ```hbs
@@ -108,11 +115,11 @@ BEFORE
 NOW
 ```hbs
 <body>
-    {{> partialName}}   
+    // partial
+    {{> partialName}}
 
-    {{> partialNamet}}
-
-    Currently not correctly supporting this implementation:  {{> header title="page title"}}
+    // helper
+    {{ HelperFileName}}
 </body>
 ```
 
@@ -121,7 +128,7 @@ NOW
 This will make the each .json file available to all templates.
 
 JSON FILE:
-`{
+```{
   "title": "Json File Title",
   "meta": "Json File Meta ",
   "app": {
@@ -132,7 +139,7 @@ JSON FILE:
     "title": "app2 title",
     "meta": "app2 meta"
   }
-}`
+}```
 
 webpack.config.js:
 ```
@@ -150,13 +157,10 @@ Template File (someFile.hbs):
 
 ```
 
-
-
-
-###Passing JSON data to a helper:
+###Using JSON data with a helper:
 
 ```
-const data = require("./public/build/manifest.json");
+const data = require("./path/to/data.json");
 
 in helper:
 

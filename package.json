@@ -1,6 +1,6 @@
 {
   "name": "handlebars-webpack-plugin-simple",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Renders your html-template on build time",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "node",
     "server"
   ],
-  "author": "Sascha Goldhofer <noreply@saschagoldhofer.de> (https://github.com/sagold/)",
+  "author": "Dave Ferrara <daveferrara1@gmail.com> (https://github.com/daveferrara1/)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/daveferrara1/handlebars-webpack-plugin-simple/issues"
