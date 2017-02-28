@@ -1,3 +1,4 @@
+[![ISC License](https://img.shields.io/npm/l/handlebars-webpack-plugin-simple.svg)](https://opensource.org/licenses/ISC)
 [![NPM](https://nodei.co/npm/handlebars-webpack-plugin-simple.png?downloads=true)](https://npmjs.org/package/handlebars-webpack-plugin-simple)
 
 Updates Include:
