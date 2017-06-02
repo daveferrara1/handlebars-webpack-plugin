@@ -1,7 +1,8 @@
 [![ISC License](https://img.shields.io/npm/l/handlebars-webpack-plugin-simple.svg)](https://opensource.org/licenses/ISC)
 
 <br />
-[![NPM](https://nodei.co/npm/handlebars-webpack-plugin-simple.png?downloads=true)](https://nodei.co/npm/handlebars-webpack-plugin-simple/)
+
+<a href="https://nodei.co/npm/handlebars-webpack-plugin-simple/"><img src="https://nodei.co/npm/handlebars-webpack-plugin-simple.png?downloads=true"></a>
 
 Updates Include:
 
